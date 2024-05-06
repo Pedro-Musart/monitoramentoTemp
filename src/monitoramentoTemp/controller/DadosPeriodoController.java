@@ -12,18 +12,30 @@ public class DadosPeriodoController {
 	public DadosPeriodo solicitaDias(DadosPeriodo dadosPeriodo) {
 		
 		Scanner input = new Scanner(System.in);
+		int quantidadeDias;
 		
-		ArrayList<Dia> dias = new ArrayList<Dia>();
+        do {
+            System.out.print("Digite a quantidade de dias: ");
+            while (!input.hasNextInt()) {
+                System.out.println("Por favor, digite um valor válido.");
+                input.next(); // Limpa o buffer do scanner
+            }
+            quantidadeDias = input.nextInt();
+            if (quantidadeDias < 1) {
+                System.out.println("Por favor, digite um valor maior ou igual a 1.");
+            }
+        } while (quantidadeDias < 1);
+
+        dadosPeriodo.setQuantidadeDias(quantidadeDias);
 		
-		System.out.println("Quantos dias você quer monitorar?");
-		dadosPeriodo.setQuantidadeDias(input.nextInt());
 		
+		Dia[] dias = dadosPeriodo.construtorDias(dadosPeriodo.getQuantidadeDias());;
 
 		for (int i = 1; i <= dadosPeriodo.getQuantidadeDias(); i++) {
 			
 			Dia dia = new Dia();
 			dia.setNumero(i);
-			dias.add(dia);
+			dias[i - 1] = dia;
 		}
 		
 		
@@ -39,10 +51,27 @@ public class DadosPeriodoController {
 	public DadosPeriodo coletaTemperaturas(DadosPeriodo dadosPeriodo) {
 
 		Scanner input = new Scanner(System.in);
+		int temperatura;
 		
 		for (Dia dia : dadosPeriodo.getDias()) {
-			System.out.println("Digite a temperatura do dia " + dia.getNumero());
-			dia.setTemperatura(input.nextInt());
+			
+			
+	        do {
+	        	System.out.println("Digite a temperatura do dia " + dia.getNumero() + ":");
+
+	            while (!input.hasNextInt()) {
+	                System.out.println("Por favor, digite um valor válido.");
+	                input.next();
+	            }
+	            temperatura = input.nextInt();
+
+	            if (temperatura < 1) {
+	                System.out.println("Por favor, digite um valor maior ou igual a 1.");
+	            }
+	        } while (temperatura < 1);
+
+	        dia.setTemperatura(temperatura);		
+			
 		}
 		
 		return dadosPeriodo;
@@ -52,8 +81,8 @@ public class DadosPeriodoController {
 //  4) Um método para obter a maior e a menor temperatura mapeada no período
 	public DadosPeriodo maiorMenorTemp(DadosPeriodo dadosPeriodo) {
 		
-		int maiorTemp = dadosPeriodo.getDias().get(0).getTemperatura();
-		int menorTemp = dadosPeriodo.getDias().get(0).getTemperatura();
+		int maiorTemp = dadosPeriodo.getDias()[0].getTemperatura();
+		int menorTemp = dadosPeriodo.getDias()[0].getTemperatura();
 		
 		for (Dia dia : dadosPeriodo.getDias()) {
 			
@@ -77,12 +106,24 @@ public class DadosPeriodoController {
 //  5) Um método para separar as temperaturas negativas no período mapeado
 	public DadosPeriodo tempNegativas(DadosPeriodo dadosPeriodo) {
 		
-		ArrayList<Integer> tempsNegativas = new ArrayList<Integer>();
+		int qtdTempsNegativas = 0;
 		
 		for (Dia dia : dadosPeriodo.getDias()) {
 			
 			if (dia.getTemperatura() < 0 ) {
-				tempsNegativas.add(dia.getTemperatura());	
+				qtdTempsNegativas++;	
+			}
+		}
+		
+		int[] tempsNegativas = new int[qtdTempsNegativas];
+		int i = 0;
+		
+		for (Dia dia : dadosPeriodo.getDias()) {
+			
+			
+			if (dia.getTemperatura() < 0 ) {
+				tempsNegativas[i] = dia.getTemperatura();
+				i++;
 			}
 		}
 		
@@ -113,7 +154,7 @@ public class DadosPeriodoController {
 		
 		System.out.println("Maior temperatura: "  + dadosPeriodo.getMaiorTemp());
 		System.out.println("Menor temperatura: "  + dadosPeriodo.getMenorTemp());
-		System.out.println("Temperaturas negativas: "  + dadosPeriodo.getTempsNegativas());
+		System.out.println("Temperaturas negativas: "  + dadosPeriodo.tempsNegativasToString());
 		System.out.println("Media de temperatura do periodo: " + dadosPeriodo.getMediaTemp());
 		System.out.println("Quantidade de dias com temperatura Positiva: " + dadosPeriodo.getQuantidadeDiasPositivos());
 	}

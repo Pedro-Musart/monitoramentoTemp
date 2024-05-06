@@ -1,17 +1,28 @@
 package monitoramentoTemp.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DadosPeriodo {
 
-	private ArrayList<Dia> dias;
+	private Dia[] dias;
 	private int quantidadeDias;
 	private int maiorTemp;
 	private int menorTemp;
 	private int mediaTemp;
-	private ArrayList<Integer> tempsNegativas;
+	private int[] tempsNegativas;
 	private int quantidadeDiasPositivos;
 	
+	//1) Construtor que recebe o tamanho do vetor
+    public Dia[] construtorDias(int tamanhoDia) {
+        Dia[] dias = new Dia[tamanhoDia];
+        return dias;
+    }
+	//1) Construtor que recebe o tamanho do vetor
+    public int[] construtorTempsNegativas(int tamanhoTemps) {
+        int[] tempsNegativas= new int[tamanhoTemps];
+        return tempsNegativas;
+    }
 	
 	public int getQuantidadeDias() {
 		return quantidadeDias;
@@ -19,10 +30,10 @@ public class DadosPeriodo {
 	public void setQuantidadeDias(int quantidadeDias) {
 		this.quantidadeDias = quantidadeDias;
 	}
-	public ArrayList<Dia> getDias() {
+	public Dia[] getDias() {
 		return dias;
 	}
-	public void setDias(ArrayList<Dia> dias) {
+	public void setDias(Dia[] dias) {
 		this.dias = dias;
 	}
 	public int getMaiorTemp() {
@@ -43,10 +54,16 @@ public class DadosPeriodo {
 	public void setMediaTemp(int mediatemp) {
 		this.mediaTemp = mediatemp;
 	}
-	public ArrayList<Integer> getTempsNegativas() {
+	
+	public int[] getTempsNegativas() {
 		return tempsNegativas;
 	}
-	public void setTempsNegativas(ArrayList<Integer> tempsNegativas) {
+	
+	public String tempsNegativasToString() {
+		return Arrays.toString(tempsNegativas);
+	}
+	
+	public void setTempsNegativas(int[] tempsNegativas) {
 		this.tempsNegativas = tempsNegativas;
 	}
 	public int getQuantidadeDiasPositivos() {
@@ -55,6 +72,9 @@ public class DadosPeriodo {
 	public void setQuantidadeDiasPositivos(int quantidadeDiasPositivos) {
 		this.quantidadeDiasPositivos = quantidadeDiasPositivos;
 	}
+
+	
+	
 	
 	
 	
